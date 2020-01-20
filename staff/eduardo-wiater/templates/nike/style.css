@@ -1,0 +1,118 @@
+body {
+  margin: 0;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  width: 100vw;
+  height: 10vh;
+  border-bottom: 1px solid black;
+}
+.header__container-icons {
+  width: 20%;
+}
+.header__logo {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  border: 1px solid black;
+}
+.header__icon-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  list-style: none;
+  padding: 0%;
+}
+.header__icons {
+  width: 1rem;
+  height: 1rem;
+  border: 3px solid black;
+  border-radius: 50%;
+}
+
+main {
+  background-color: white;
+  width: 100vw;
+}
+
+.result {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.result__head {
+  display: flex;
+  height: 10%;
+  width: 100%;
+  justify-content: space-between;
+  border-bottom: 1px solid black;
+  align-items: center;
+}
+.result__title {
+  color: black;
+  font-size: 1rem;
+  margin-left: 0.2rem;
+}
+.result__settings {
+  width: 1rem;
+  height: 1rem;
+  border: 3px solid black;
+  border-radius: 50%;
+  margin-right: 0.2rem;
+}
+.result__list {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  grid-template-rows: repeat(2, auto);
+  grid-gap: 0.2rem;
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+}
+.result__product {
+  width: 8rem;
+  height: 8rem;
+  border: 2px solid black;
+  border-radius: 2%;
+  background-color: lightgrey;
+}
+
+.footer {
+  width: 100%;
+  background-color: black;
+  color: white;
+  font-family: arial;
+  font-weight: bold;
+  display: inline-flex;
+  flex-direction: column;
+}
+.footer__head {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  border-bottom: 1px solid lightgrey;
+}
+.footer__help {
+  display: flex;
+  justify-content: space-between;
+}
+.footer__about {
+  display: flex;
+  justify-content: space-between;
+}
+.footer__media {
+  display: flex;
+  justify-content: start;
+}
+.footer__location {
+  display: flex;
+  justify-content: start;
+  color: darkgrey;
+  font-size: small;
+}
+
+/*# sourceMappingURL=style.css.map */

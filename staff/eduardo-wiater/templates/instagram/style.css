@@ -1,0 +1,190 @@
+
+* {
+    margin: 0%;
+}
+
+header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: azure;
+    height: 8vh;
+    border-bottom: 1px solid black;
+}
+
+.header__containerCompany {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    width: 30%;
+
+}
+
+.header__logo {
+    width: 3vh;
+    height: 3vh;
+    border-radius: 50%;
+    border: 3px solid black;
+}
+
+.header__letters {
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: medium;
+}
+
+
+.header__cotainerUser {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+
+}
+
+.header__brujula {
+    width: 3vh;
+    height: 3vh;
+    border-radius: 50%;
+    border: 3px solid black;
+}
+
+.header__user {
+    width: 3vh;
+    height: 3vh;
+    border-radius: 50%;
+    border: 3px solid black;
+}
+
+.stories {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    height: 10vh;
+    border-bottom: 1px solid black;
+
+}
+
+.stories__bubbles {
+    width: 3vh;
+    height: 3vh;
+    border-radius: 50%;
+    border: 2px solid black;
+}
+
+.tabla {
+    display: flex;
+
+}
+
+.main__post {
+    justify-content: center;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    height: 35vh;
+
+}
+
+.main__header {
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    height: 5vh;
+}
+
+.main__containerUser {
+    display: flex;
+    width: 35vh;
+    flex-direction: row;
+}
+
+.main__bubble {
+    width: 3vh;
+    height: 3vh;
+    border-radius: 50%;
+    border: 2px solid black;
+}
+
+.main__name {
+    color: black;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.main__options {
+    color: black;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.main_picture {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main__footer {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+}
+
+.messageSent {
+    color: black;
+    font-size: medium
+}
+
+.main__footer {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.main__reactionContainer {
+    display: flex;
+}
+
+.main__heart {
+    width: 3vh;
+    height: 3vh;
+    border-radius: 50%;
+    border: 2px solid black;
+}
+
+.main__message {
+    width: 3vh;
+    height: 3vh;
+    border-radius: 50%;
+    border: 2px solid black;
+}
+
+.main__favourite {
+    width: 3vh;
+    height: 3vh;
+    border-radius: 50%;
+    border: 2px solid black;
+}
+
+.main__messageSent {
+    border-bottom: 2px solid black;
+}
+
+.main__messageSent>p {
+    color: black;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+}
+/*-----------------------------------------------------------------------------
+.profile__logo {
+    display: flex;
+    display
+}
+
+
+
+*/
