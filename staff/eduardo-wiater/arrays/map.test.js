@@ -8,7 +8,15 @@ var test = map(cont,function(x){return x + 6 })
 
 
 
+var _error;
 
+try {
+    map(undefined,function(){})
+} catch (error) {
+    _error = error
+} finally {
+    console.assert( _error.message === "undefine is not an array", " should fail with message undefined is not an array") 
+}
 
 // console.log(map(a,function(x){return x + 2 }));
 // console.log(map(a,function(x){return x * 2 }));
