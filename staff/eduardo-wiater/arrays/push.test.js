@@ -26,8 +26,5 @@ describe('push', function () {
         } finally {
             assert(_error instanceof TypeError, "should be an array")
         }
-
     });
-
-
 });
