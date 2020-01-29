@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Googl </title>
+<style>
+.screen {
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+    width: auto;     
+}
+input {
+    border-radius: 10%;
+}
+</style>
+</head>
+                    <!--  mirar la clase de los formularios ..y sus divs-->
+<body>
+    <main>
+        <h1>Googl</h1>
+        <div class="screen">  
+        <div class="registre">
+            <form class="login">
+                <label for="msg">Name:</label>
+                 <input type="text" name="name" autocomplete="off"
+                 placeholder="Nombre">
+                <label for="msg">Surname:</label>
+                 <input type="text" name="surname">
+                <label for="msg">Username:</label>
+                 <input type="text" name="username">
+                <label for="msg">Password:</label>                
+                <input type="password" name="password">
+                <button>Register</button>
+            </form>
+
+        </div>
+        <div class="login">
+            <form class="login">
+                <input type="text" name="username">
+                <input type="password" name="password">
+                <button>Login</button>
+            </form>
+        </div>
+        <div class="search">
+            <form class="login">
+                <input type="text" name="query">
+                <button>Search</button>
+            </form>
+
+        </div>
+       </div>
+    </main>
+
+</body>
+
+</html>
