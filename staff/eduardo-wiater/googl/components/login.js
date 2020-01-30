@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 function createLogin(idClass, props) {debugger
     var login = document.querySelector('.' + idClass);
