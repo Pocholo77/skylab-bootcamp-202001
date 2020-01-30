@@ -9,20 +9,28 @@
 
 var IT = '🎈🤡';
 
-var login = createLogin('login', function (username, password) {
-    var user = users.find(function (user) { return user.username === username; });
+var login = createLogin('login', {
 
-    if (user && user.password === password) {
+    onSubmit: function (username, password) {
+   
+    try{debugger
+        authenticate(password, username)
+
         login.toggle();
         _googl.toggle();
         _ecosia.toggle();
         _bing.toggle();
         _yahoo.toggle();
-    } else alert('Wrong credentials, you cannot get in ' + IT);
-}, function () {
-    login.toggle();
-    _register.toggle();
+    }catch(error){
+        alert('Wrong credentials, you cannot get in ' + IT);
+    }
+},
+  onToRegister :  function () {
+        login.toggle();
+        _register.toggle();
+    }
 });
+
 
 var _register = createRegister('register', function (name, surname, username, password) {
     try {
