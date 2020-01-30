@@ -1,12 +1,13 @@
 'use strict';
 
-function createLogin(idClass, props) {debugger
+function createLogin(idClass, props) {
     var login = document.querySelector('.' + idClass);
 
     login.addEventListener('submit', function(event) {
         event.preventDefault();
 
         var username = this.username.value;
+       
         var password = this.password.value;
 
         props.onSubmit(username, password);
@@ -21,7 +22,7 @@ function createLogin(idClass, props) {debugger
     register.addEventListener('click', function(event) {
         event.preventDefault();
 
-        onToRegister();
+        props.onToRegister();
     });
 
     return login;
