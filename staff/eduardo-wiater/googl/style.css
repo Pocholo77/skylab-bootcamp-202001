@@ -1,50 +1,87 @@
-Body {
-    width: 100%;
-    height: 100%;
-    display:flex;
-    align-items: center;
-    flex-direction: column;
-    
-}
-input {
-    border-radius: 10%;
-
+body {
+  text-align: center;
 }
 
-button {
-    height: 1.5rem;
+.search {
+  display: inline-block;
+  border: 1px solid black;
+  border-radius: 1rem;
+  padding: 0.5rem;
+}
+.search--hide {
+  display: none;
+}
+.search input {
+  display: block;
+  border: 1px solid black;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  margin: 0.5rem;
+}
+.search button {
+  display: block;
+  border: 1px solid black;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  margin: 0.5rem;
 }
 
-.register{ 
-    display : flex;
-    flex-direction:column ;
+.login {
+  display: inline-block;
+  border: 1px solid black;
+  border-radius: 1rem;
+  padding: 0.5rem;
+}
+.login--hide {
+  display: none;
+}
+.login input {
+  display: block;
+  border: 1px solid black;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  margin: 0.5rem;
+}
+.login button {
+  display: block;
+  border: 1px solid black;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  margin: 0.5rem;
+}
+.login a {
+  display: block;
+  padding: 0.5rem;
+  margin: 0.5rem;
 }
 
-.register--hide{ 
-        display: none;
+.register {
+  display: inline-block;
+  border: 1px solid black;
+  border-radius: 1rem;
+  padding: 0.5rem;
 }
-.login{
-    display : flex;
-    flex-direction: column;
+.register--hide {
+  display: none;
 }
-.login--hide { 
-    display: none; 
+.register input {
+  display: block;
+  border: 1px solid black;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  margin: 0.5rem;
 }
-        
-    
-.search{ 
-    display : flex;
-    flex-direction: column;
-    justify-content: flex-start; 
+.register button {
+  display: block;
+  border: 1px solid black;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  margin: 0.5rem;
 }
-.search--hide { 
-        display: none;
-}    
-.landing { 
-    display : flex;
-    flex-direction: row ;
+.register a {
+  display: block;
+  padding: 0.5rem;
+  margin: 0.5rem;
 }
 
-.landing--hide {  
-    display: none;
-}
+/*# sourceMappingURL=style.css.map */
