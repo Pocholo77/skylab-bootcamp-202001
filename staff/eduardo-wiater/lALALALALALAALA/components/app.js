@@ -54,20 +54,31 @@ function App(props) {
                 if (!vehicles.length)
                     return _search.showWarning('No results ' + IT);
 
-                var __results = Results({ results: vehicles });
+                var results = new Results({
+                    result: vehicles, onClick: function (id)
+                    retrieveVehicles(id,function(details) {
 
-                if (!_results)
-                    app.append(_results = __results);
-                else {
-                    _results.replaceWith(__results);
+                        __results.container.replaceWith(detailedVehicle.container);
+                        detailedVehicle.container.querySelector('button').addEventListener('click', function () {
+                            detailedVehicle.container.replaceWith(__results.container);
+                        })
+                    })
+            })
 
-                    _results = __results;
-                }
-            });
-        }
+            //var __results = Results({ results: vehicles });
+
+            if (!_results)
+                app.append(_results = __results);
+            else {
+                _results.replaceWith(__results);
+
+                _results = __results;
+            }
+        });
+}
     });
 
-    var _results;
+var _results;
 }
 
 App.prototype = Object.create(Component.prototype);
