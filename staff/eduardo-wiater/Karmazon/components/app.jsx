@@ -4,54 +4,65 @@ const { Component, Fragment } = React
 
 class App extends Component {
 
-    
-    state = { view: 'login', vehicles: undefined , vehicle: undefined , error: undefined  }
+
+    state = { view: 'login', vehicles: undefined, vehicle: undefined, error: undefined }
 
     handleLogin = (username, password) => {
         try {
             authenticate(username, password)
-            this.setState({view: 'search'})
-           
+            this.setState({ view: 'search' })
+
         } catch (error) {
-            this.setState({error:error.message + ' ' + IT})
+            this.setState({ error: error.message + ' ' + IT })
+            setTimeout(() => {
+                this.setState({ error: undefined })
+            }, 3000)
         }
     }
 
-    handleGoToRegister = () => this.setState({view: 'register'})
-    
-    handleRegister = (name, surname, username, password)=>{
+    handleGoToRegister = () => this.setState({ view: 'register' })
+
+    handleRegister = (name, surname, username, password) => {
         try {
-            register(name,surname,username, password)
-            this.setState({view: 'login'})
-           
+            register(name, surname, username, password)
+            this.setState({ view: 'login' })
+
         } catch (error) {
-            this.setState({error:error.message + ' ' + IT})
+            this.setState({ error: error.message + ' ' + IT })
+            setTimeout(() => {
+                this.setState({ error: undefined })
+            }, 3000)
         }
+
     }
 
-    handleGoToLogin = ()=> this.setState({ view : 'login'})
+    handleGoToLogin = () => this.setState({ view: 'login' })
 
-    handleSearch = (query) =>{ 
+    handleSearch = (query) => {
         searchVehicles(query, vehicles => {
-            if(!vehicles.length)  return this.setState({error:error.message + ' ' + IT})
-            this.setState({vehicles})
+            if (!vehicles.length) return this.setState({ error: 'No results ' + IT })
+            this.setState({ vehicles })
         })
+
+        setTimeout(() => {
+            this.setState({ error: undefined })
+        }, 3000)
 
     }
 
     render() {
-        const { props: {title}, state: {view, vehicles, vehicle, error}, handleLogin, handleGoToRegister, handleRegister, handleGoToLogin, handleSearch} = this
+        const { props: { title }, state: { view, vehicles, vehicle, error }, handleLogin, handleGoToRegister, handleRegister, handleGoToLogin, handleSearch } = this
         return <Fragment>
             <h1>{title}</h1>
-            {view==='login' && <Login onSubmit={handleLogin} onToRegister={handleGoToRegister} error={error} />}
+            {view === 'login' && <Login onSubmit={handleLogin} onToRegister={handleGoToRegister} error={error} />}
 
-            {view==='register'&& <Register onSubmit={handleRegister} onToLogin={ handleGoToLogin }  error={error} />}
+            {view === 'register' && <Register onSubmit={handleRegister} onToLogin={handleGoToLogin} error={error} />}
 
-            {view==='search' && <Search title="Search" onSubmit={handleSearch} error={error} />}
+            {view === 'search' && <Search title="Search" onSubmit={handleSearch} error={error} />}
 
-            {vehicles && <Results results={vehicles}/> }
-            
+            {vehicles && <Results results={vehicles} />}
 
+            {view}
 
         </Fragment>
     }
