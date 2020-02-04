@@ -62,8 +62,7 @@ class App extends Component {
 
             {vehicles && <Results results={vehicles} />}
 
-            {view}
-
+        
         </Fragment>
     }
 }
