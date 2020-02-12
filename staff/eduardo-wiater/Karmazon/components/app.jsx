@@ -3,20 +3,87 @@ const IT = '🎈🤡'
 const { Component, Fragment } = React
 
 class App extends Component {
+    // ES6
+    // constructor() {
+    //     super()
 
+    //     this.state = { view: 'login', vehicles: undefined, vehicle: undefined, style: undefined, error: undefined }
 
-    state = { view: 'login', vehicles: undefined, vehicle: undefined, error: undefined }
+    //     this.handleLogin = this.handleLogin.bind(this)
+    // }
 
+    // ES.NEXT
+    state = { view: undefined, vehicles: undefined, vehicle: undefined, style: undefined, error: undefined, query: undefined }
+
+    __handleError__(error) {
+        this.setState({ error: error.message + ' ' + IT })
+
+        setTimeout(() => {
+            this.setState({ error: undefined })
+        }, 3000)
+    }
+
+    componentWillMount() {
+        const { token } = sessionStorage
+
+        if (token)
+            try {
+                retrieveUser(token, (error, user) => {
+                    if (error) {
+                        //return this.__handleError__(error)
+
+                        this.handleLogout()
+                    }
+
+                    if (location.queryString.q) {
+                        const { q: query } = location.queryString 
+
+                        searchVehicles(token, query, (error, vehicles) => {
+                            if (error)
+                                return this.__handleError__(error)
+
+                            this.setState({ view: 'search', user, query, vehicles, error: vehicles.length ? undefined : 'No results ' + IT })
+
+                            if (!vehicles.length)
+                                setTimeout(() => {
+                                    this.setState({ error: undefined })
+                                }, 3000)
+                        })
+                    } else
+                        this.setState({ view: 'search', user })
+                })
+            } catch (error) {
+                // this.setState({ error: error.message + ' ' + IT })
+
+                // setTimeout(() => {
+                //     this.setState({ error: undefined })
+                // }, 3000)
+                sessionStorage.clear()
+
+                this.setState({ view: 'login' })
+            }
+        else this.setState({ view: 'login' })
+    }
+
+    // ES.NEXT
     handleLogin = (username, password) => {
         try {
-            authenticate(username, password)
-            this.setState({ view: 'search' })
+            authenticateUser(username, password, (error, token) => {
+                if (error) {
+                    this.__handleError__(error)
+                } else {
+                    retrieveUser(token, (error, user) => {
+                        if (error)
+                            return this.__handleError__(error)
 
+                        sessionStorage.token = token
+
+                        this.setState({ view: 'search', user })
+                    })
+                }
+            })
         } catch (error) {
-            this.setState({ error: error.message + ' ' + IT })
-            setTimeout(() => {
-                this.setState({ error: undefined })
-            }, 3000)
+            this.__handleError__(error)
         }
     }
 
@@ -24,154 +91,102 @@ class App extends Component {
 
     handleRegister = (name, surname, username, password) => {
         try {
-            register(name, surname, username, password)
-            this.setState({ view: 'login' })
-
+            registerUser(name, surname, username, password, error => {
+                if (error) {
+                    this.__handleError__(error)
+                } else
+                    this.setState({ view: 'login' })
+            })
         } catch (error) {
-            this.setState({ error: error.message + ' ' + IT })
-            setTimeout(() => {
-                this.setState({ error: undefined })
-            }, 3000)
+            this.__handleError__(error)
         }
-
     }
 
     handleGoToLogin = () => this.setState({ view: 'login' })
 
-    handleSearch = (query) => {
-        searchVehicles(query, vehicles => {
-            if (!vehicles.length) return this.setState({ error: 'No results ' + IT })
-            this.setState({ vehicles })
-        })
+    handleSearch = query => {
+        try {
+            const { token } = sessionStorage
 
-        setTimeout(() => {
-            this.setState({ error: undefined })
-        }, 3000)
+            searchVehicles(token, query, (error, vehicles) => {
+                if (error)
+                    return this.__handleError__(error)
 
+                location.queryString = { q: query }
+
+                this.setState({ vehicles, vehicle: undefined, error: vehicles.length ? undefined : 'No results ' + IT })
+
+                if (!vehicles.length)
+                    setTimeout(() => {
+                        this.setState({ error: undefined })
+                    }, 3000)
+            })
+        } catch (error) {
+            this.__handleError__(error)
+        }
+    }
+
+    handleDetail = id => {
+        try {
+            retrieveVehicle(id, (error, vehicle) => {
+                if (error)
+                    return this.__handleError__(error)
+
+                retrieveStyle(vehicle.style, (error, style) => {
+                    if (error)
+                        return this.__handleError__(error)
+
+                    this.setState({ vehicle, style, vehicles: undefined })
+                })
+            })
+        } catch (error) {
+            this.__handleError__(error)
+        }
+    }
+
+    handleFav = id => {
+        try {
+            const { token } = sessionStorage
+
+            toggleFavVehicle(token, id, error => {
+                if (error)
+                    return this.__handleError__(error)
+
+                const { query } = this.state
+
+                if (query)
+                    this.handleSearch(query)
+            })
+        } catch (error) {
+            this.__handleError__(error)
+        }
+    }
+
+    handleLogout = () => {
+        sessionStorage.clear()
+
+        // TODO clear querystring in url
+
+        this.setState({ view: 'login', user: undefined })
     }
 
     render() {
-        const { props: { title }, state: { view, vehicles, vehicle, error }, handleLogin, handleGoToRegister, handleRegister, handleGoToLogin, handleSearch } = this
-        return <Fragment>
+        const { props: { title }, state: { view, vehicles, vehicle, style, error, user, query }, handleLogin, handleGoToRegister, handleRegister, handleGoToLogin, handleSearch, handleDetail, handleFav, handleLogout } = this
+
+        return <main>
             <h1>{title}</h1>
+
+            {user && <Fragment><h2>{user.name} <button onClick={handleLogout}>Logout</button></h2></Fragment>}
+
             {view === 'login' && <Login onSubmit={handleLogin} onToRegister={handleGoToRegister} error={error} />}
 
             {view === 'register' && <Register onSubmit={handleRegister} onToLogin={handleGoToLogin} error={error} />}
 
-            {view === 'search' && <Search title="Search" onSubmit={handleSearch} error={error} />}
+            {view === 'search' && <Search onSubmit={handleSearch} query={query} warning={error} />}
 
-            {vehicles && <Results results={vehicles} />}
+            {view === 'search' && vehicles && <Results results={vehicles} onItemClick={handleDetail} onItemFavClick={handleFav} />}
 
-        
-        </Fragment>
+            {view === 'search' && vehicle && <Detail vehicle={vehicle} style={style} />}
+        </main>
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const IT = '🎈🤡'
-
-// class App extends Component {
-//     constructor(props) {
-//         super(document.createElement('main'))
-
-//         const app = this.container
-
-//         app.innerHTML = '<h1>' + props.title + '</h1>'
-
-//         const _login = new Login({
-//             onSubmit(username, password) {
-//                 try {
-//                     authenticate(username, password)
-
-//                     _login.container.replaceWith(_search.container)
-//                 } catch (error) {
-//                     _login.showError(error.message + ' ' + IT)
-//                 }
-//             },
-//             onToRegister() {
-//                 _login.container.replaceWith(_register.container)
-//             }
-//         })
-
-//         app.append(_login.container)
-
-//         const _register = new Register({
-//             onSubmit(name, surname, username, password) {
-//                 try {
-//                     register(name, surname, username, password)
-
-//                     _register.container.replaceWith(_login.container)
-//                 } catch (error) {
-//                     //alert(error.message + ' ' + IT)
-//                     _register.showError(error.message + ' ' + IT)
-//                 }
-//             },
-//             onToLogin() {
-//                 _register.container.replaceWith(_login.container)
-//             }
-//         })
-
-//         const _search = new Search({
-//             title: 'Search',
-
-//             onSubmit(query) {
-//                 searchVehicles(query, vehicles => {
-//                     if (vehicles instanceof Error)
-//                         return _search.showError(vehicles.message + ' ' + IT)
-
-//                     if (!vehicles.length)
-//                         return _search.showWarning('No results ' + IT)
-
-//                     const __results = new Results({
-//                         results: vehicles,
-
-//                         onItemClick(id) {
-//                             retrieveVehicle(id, vehicle => {
-//                                 retrieveStyle(vehicle.style, style => {
-//                                     const detail = new Detail({ vehicle, style })
-
-//                                     _results.replaceWith(detail.container)
-
-//                                     _results = detail.container
-//                                 })
-
-//                             })
-//                         }
-//                     })
-
-//                     if (!_results)
-//                         app.append(_results = __results.container)
-//                     else {
-//                         _results.replaceWith(__results.container)
-
-//                         _results = __results.container
-//                     }
-//                 })
-//             }
-//         })
-
-//         //app.append(_search.container) // BYPASS for quick testing search on screen (without going through login)
-
-//         let _results
-//     }

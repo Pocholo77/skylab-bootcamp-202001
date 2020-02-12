@@ -1,6 +1,10 @@
 function Detail({ vehicle: { name, year, price, image, color, maker, collection, description, url }, style: { name: styleName, image: styleImage, url: styleUrl } }) {
 
     return <li>
+        <a className="button" onClick={ event =>{
+            event.preventDefault()
+            onBack()
+        }}>BACK</a>
         <h3>{name} ({year})</h3>
         <img src={image} />
         <span>{price}€</span>
